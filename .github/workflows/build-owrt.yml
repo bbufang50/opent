@@ -182,6 +182,8 @@ jobs:
 
     - name: copy update files
       run: |
+        mkdir -p /opt/openwrt_packit
+        mv /home/runner/work/_actions/ophub/amlogic-s9xxx-openwrt/main/openwrt/out/* /opt/openwrt_packit/
         cd /opt/openwrt_packit
         cp ./files/update*.sh ./output/
         rm -rf $(find ./output/ -name "sha256sums" -o -name "*.gz.sha" -o -name "*.tar.gz")
