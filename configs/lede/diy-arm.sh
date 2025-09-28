@@ -46,8 +46,6 @@ sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd
 
 # 清理可能导致编译失败的包
 rm -rf feeds/packages/libs/libfido2
-rm -rf feeds/packages/lang/python/python3
-rm -rf feeds/packages/libs/libssh2
 
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
