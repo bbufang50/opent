@@ -42,9 +42,6 @@ sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd
 git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
 sed -i 's|^KERNEL_PATCHVER:=.*|KERNEL_PATCHVER:=6.1|' target/linux/x86/Makefile
 
-# 清理可能导致编译失败的包
-rm -rf feeds/packages/libs/libfido2
-
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
 
