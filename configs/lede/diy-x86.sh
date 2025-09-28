@@ -42,16 +42,6 @@ sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd
 git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
 sed -i 's|^KERNEL_PATCHVER:=.*|KERNEL_PATCHVER:=6.1|' target/linux/x86/Makefile
 
-# 强制屏蔽 libfido2 及相关依赖
-sed -i '/CONFIG_PACKAGE_libfido2/d' .config
-echo "# CONFIG_PACKAGE_libfido2 is not set" >> .config
-
-# 额外保险：屏蔽掉可能间接依赖 libfido2 的包
-sed -i '/CONFIG_PACKAGE_pcsc-lite/d' .config
-sed -i '/CONFIG_PACKAGE_ccid/d' .config
-echo "# CONFIG_PACKAGE_pcsc-lite is not set" >> .config
-echo "# CONFIG_PACKAGE_ccid is not set" >> .config
-
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
 
