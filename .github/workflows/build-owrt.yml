@@ -93,12 +93,12 @@ jobs:
         git reset --hard dc8d5cc352805268efeefd5fd8fe835cd2db93ba
 
         cd feeds/packages
-        echo "===> 固定 packages 仓库到 397a442c3b8ad41eeef20f66435f2041a2afdffa"
-        git reset --hard 397a442c3b8ad41eeef20f66435f2041a2afdffa
+        echo "===> 固定 packages 仓库到 46e828feb98d256a39777b18b9c57710813ed795"
+        git reset --hard 46e828feb98d256a39777b18b9c57710813ed795
 
         cd ../luci
-        echo "===> 固定 luci 仓库到 985347d747e2db85ce4fd0b52029f4cd883ff79d"
-        git reset --hard 985347d747e2db85ce4fd0b52029f4cd883ff79d
+        echo "===> 固定 luci 仓库到 20fcb0830c9de1776752b331a7c4ef1949c40e96"
+        git reset --hard 20fcb0830c9de1776752b331a7c4ef1949c40e96
 
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
