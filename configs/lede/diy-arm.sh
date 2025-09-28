@@ -44,16 +44,6 @@ sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd
 #sed -i 's|^PKG_VERSION.*|PKG_VERSION:=1.11.15|' feeds/small/sing-box/Makefile
 #sed -i 's|^PKG_HASH.*|PKG_HASH:=97d58dd873d7cf9b5e4b4aca5516568f3b2e6f5c3dbc93241c82fff5e4a609fd|' feeds/small/sing-box/Makefile
 
-# 强制屏蔽 libfido2 及相关依赖
-sed -i '/CONFIG_PACKAGE_libfido2/d' .config
-echo "# CONFIG_PACKAGE_libfido2 is not set" >> .config
-
-# 额外保险：屏蔽掉可能间接依赖 libfido2 的包
-sed -i '/CONFIG_PACKAGE_pcsc-lite/d' .config
-sed -i '/CONFIG_PACKAGE_ccid/d' .config
-echo "# CONFIG_PACKAGE_pcsc-lite is not set" >> .config
-echo "# CONFIG_PACKAGE_ccid is not set" >> .config
-
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
 
