@@ -86,6 +86,20 @@ jobs:
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
 
+    - name: Pin repo version   # 这里新增
+      run: |
+        cd openwrt
+        echo "===> 固定 lede 仓库到 dc8d5cc352805268efeefd5fd8fe835cd2db93ba"
+        git reset --hard dc8d5cc352805268efeefd5fd8fe835cd2db93ba
+
+        cd feeds/packages
+        echo "===> 固定 packages 仓库到 397a442c3b8ad41eeef20f66435f2041a2afdffa"
+        git reset --hard 397a442c3b8ad41eeef20f66435f2041a2afdffa
+
+        cd ../luci
+        echo "===> 固定 luci 仓库到 985347d747e2db85ce4fd0b52029f4cd883ff79d"
+        git reset --hard 985347d747e2db85ce4fd0b52029f4cd883ff79d
+
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
