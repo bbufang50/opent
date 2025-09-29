@@ -44,29 +44,43 @@ sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd
 #sed -i 's|^PKG_VERSION.*|PKG_VERSION:=1.11.15|' feeds/small/sing-box/Makefile
 #sed -i 's|^PKG_HASH.*|PKG_HASH:=97d58dd873d7cf9b5e4b4aca5516568f3b2e6f5c3dbc93241c82fff5e4a609fd|' feeds/small/sing-box/Makefile
 
-# diy.sh - 固定 OpenSSH 版本到 2025-09-25
+# diy.sh - 固定 OpenSSH 版本到 2025-09-25 commit 74abe2d0643d480c6260c1bc3a58e17f0c632f8b
+
+set -e  # 遇到任何错误立即停止执行
 
 echo "固定 OpenSSH 版本中..."
 
-# 删除现有 feeds 下 openssh
+# 删除旧版本的 openssh，避免冲突
 rm -rf feeds/packages/net/openssh
 
-# 克隆 packages 仓库到临时目录
-git clone https://github.com/openwrt/packages.git -b master feeds/packages_temp
+# 创建临时目录，用于拉取指定 commit 的 openssh
+TMP_DIR=$(mktemp -d)
+echo "临时目录: $TMP_DIR"
 
-# 回退到指定 openssh commit
-cd feeds/packages_temp/net/openssh
-git checkout 74abe2d
+# 初始化临时 git 仓库
+git -C "$TMP_DIR" init
 
-# 创建目标目录并移动 openssh
-mkdir -p ../../../packages/net
-mv . ../../../packages/net/openssh
+# 添加远程仓库
+git -C "$TMP_DIR" remote add origin https://github.com/openwrt/packages.git
+
+# 开启 sparse checkout，只拉取 openssh 子目录
+git -C "$TMP_DIR" config core.sparseCheckout true
+echo "net/openssh" > "$TMP_DIR/.git/info/sparse-checkout"
+
+# 拉取指定 commit（深度为 1，只获取这个 commit）
+git -C "$TMP_DIR" fetch --depth=1 origin 74abe2d0643d480c6260c1bc3a58e17f0c632f8b
+
+# 切换到这个 commit
+git -C "$TMP_DIR" checkout FETCH_HEAD
+
+# 创建目标目录并移动 openssh 到 feeds
+mkdir -p feeds/packages/net
+mv "$TMP_DIR/net/openssh" feeds/packages/net/openssh
 
 # 清理临时目录
-cd ../../../
-rm -rf feeds/packages_temp
+rm -rf "$TMP_DIR"
 
-echo "OpenSSH 已固定到 commit 74abe2d"
+echo "OpenSSH 已固定到 commit 74abe2d0643d480c6260c1bc3a58e17f0c632f8b"
 
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
