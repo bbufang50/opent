@@ -42,11 +42,43 @@ sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd
 git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
 sed -i 's|^KERNEL_PATCHVER:=.*|KERNEL_PATCHVER:=6.1|' target/linux/x86/Makefile
 
+# diy.sh - 固定 OpenSSH 版本到 2025-09-25 commit 74abe2d0643d480c6260c1bc3a58e17f0c632f8b
 
+set -e  # 遇到任何错误立即停止执行
+
+echo "固定 OpenSSH 版本中..."
+
+# 删除旧版本的 openssh，避免冲突
 rm -rf feeds/packages/net/openssh
-git clone --branch master https://github.com/openwrt/packages.git feeds/packages/net/openssh
-cd feeds/packages/net/openssh
-git checkout 74abe2d
+
+# 创建临时目录，用于拉取指定 commit 的 openssh
+TMP_DIR=$(mktemp -d)
+echo "临时目录: $TMP_DIR"
+
+# 初始化临时 git 仓库
+git -C "$TMP_DIR" init
+
+# 添加远程仓库
+git -C "$TMP_DIR" remote add origin https://github.com/openwrt/packages.git
+
+# 开启 sparse checkout，只拉取 openssh 子目录
+git -C "$TMP_DIR" config core.sparseCheckout true
+echo "net/openssh" > "$TMP_DIR/.git/info/sparse-checkout"
+
+# 拉取指定 commit（深度为 1，只获取这个 commit）
+git -C "$TMP_DIR" fetch --depth=1 origin 74abe2d0643d480c6260c1bc3a58e17f0c632f8b
+
+# 切换到这个 commit
+git -C "$TMP_DIR" checkout FETCH_HEAD
+
+# 创建目标目录并移动 openssh 到 feeds
+mkdir -p feeds/packages/net
+mv "$TMP_DIR/net/openssh" feeds/packages/net/openssh
+
+# 清理临时目录
+rm -rf "$TMP_DIR"
+
+echo "OpenSSH 已固定到 commit 74abe2d0643d480c6260c1bc3a58e17f0c632f8b"
 
 
 # Delete mosdns
