@@ -85,21 +85,7 @@ jobs:
 
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
-
-    - name: Pin repo version   # 这里新增
-      run: |
-        cd openwrt
-        echo "===> 固定 lede 仓库到 dc8d5cc352805268efeefd5fd8fe835cd2db93ba"
-        git reset --hard dc8d5cc352805268efeefd5fd8fe835cd2db93ba
-
-        cd feeds/packages
-        echo "===> 固定 packages 仓库到 46e828feb98d256a39777b18b9c57710813ed795"
-        git reset --hard 46e828feb98d256a39777b18b9c57710813ed795
-
-        cd ../luci
-        echo "===> 固定 luci 仓库到 20fcb0830c9de1776752b331a7c4ef1949c40e96"
-        git reset --hard 20fcb0830c9de1776752b331a7c4ef1949c40e96
-
+      
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
@@ -337,20 +323,6 @@ jobs:
         cd openwrt
         ./scripts/feeds update -a
         df -hT
-
-    - name: Pin repo version   # 这里新增
-      run: |
-        cd openwrt
-        echo "===> 固定 lede 仓库到 dc8d5cc352805268efeefd5fd8fe835cd2db93ba"
-        git reset --hard dc8d5cc352805268efeefd5fd8fe835cd2db93ba
-
-        cd feeds/packages
-        echo "===> 固定 packages 仓库到 46e828feb98d256a39777b18b9c57710813ed795"
-        git reset --hard 46e828feb98d256a39777b18b9c57710813ed795
-
-        cd ../luci
-        echo "===> 固定 luci 仓库到 20fcb0830c9de1776752b331a7c4ef1949c40e96"
-        git reset --hard 20fcb0830c9de1776752b331a7c4ef1949c40e96
 
     # 安装 feeds
     - name: Install feeds
