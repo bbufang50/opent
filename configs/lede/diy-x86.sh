@@ -42,6 +42,12 @@ sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd
 git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
 sed -i 's|^KERNEL_PATCHVER:=.*|KERNEL_PATCHVER:=6.1|' target/linux/x86/Makefile
 
+# 固定 openssh 到 74abe2d
+pushd feeds/packages/net/openssh
+git fetch --unshallow || true
+git reset --hard 74abe2d
+popd
+
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
 
