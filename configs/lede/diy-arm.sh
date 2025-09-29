@@ -44,11 +44,29 @@ sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd
 #sed -i 's|^PKG_VERSION.*|PKG_VERSION:=1.11.15|' feeds/small/sing-box/Makefile
 #sed -i 's|^PKG_HASH.*|PKG_HASH:=97d58dd873d7cf9b5e4b4aca5516568f3b2e6f5c3dbc93241c82fff5e4a609fd|' feeds/small/sing-box/Makefile
 
-# 固定 openssh 到 74abe2d
-pushd feeds/packages/net/openssh
-git fetch --unshallow || true
-git reset --hard 74abe2d
-popd
+# diy.sh - 固定 OpenSSH 版本到 2025-09-25
+
+echo "固定 OpenSSH 版本中..."
+
+# 删除现有 feeds 下 openssh
+rm -rf feeds/packages/net/openssh
+
+# 克隆 packages 仓库到临时目录
+git clone https://github.com/openwrt/packages.git -b master feeds/packages_temp
+
+# 回退到指定 openssh commit
+cd feeds/packages_temp/net/openssh
+git checkout 74abe2d
+
+# 创建目标目录并移动 openssh
+mkdir -p ../../../packages/net
+mv . ../../../packages/net/openssh
+
+# 清理临时目录
+cd ../../../
+rm -rf feeds/packages_temp
+
+echo "OpenSSH 已固定到 commit 74abe2d"
 
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
