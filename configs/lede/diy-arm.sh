@@ -43,6 +43,8 @@ git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git packa
 #sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd2ae7895813970b2c|' feeds/small/xray-core/Makefile
 #sed -i 's|^PKG_VERSION.*|PKG_VERSION:=1.11.15|' feeds/small/sing-box/Makefile
 #sed -i 's|^PKG_HASH.*|PKG_HASH:=97d58dd873d7cf9b5e4b4aca5516568f3b2e6f5c3dbc93241c82fff5e4a609fd|' feeds/small/sing-box/Makefile
+rm -rf feeds/packages/net/msd_lite feeds/luci/applications/luci-app-msd_lite
+git clone https://github.com/gtolog/openwrt-msd_lite.git package/openwrt-msd_lite
 
 # diy.sh - 固定多个仓库的指定目录到特定 commit
 
@@ -98,21 +100,6 @@ fetch_repo_dir \
     "804846e4cc76221f38f3a57845fab948a7ee5185" \
     "xray-core" \
     "feeds/small/xray-core"
-
-# 拉取 msd_lite 到 feeds/packages/net/
-fetch_repo_dir \
-    "https://github.com/gtolog/openwrt-msd_lite.git" \
-    "main" \
-    "msd_lite" \
-    "feeds/packages/net/msd_lite"
-
-# 拉取 luci-app-msd_lite 到 feeds/luci/applications/
-fetch_repo_dir \
-    "https://github.com/gtolog/openwrt-msd_lite.git" \
-    "main" \
-    "luci-app-msd_lite" \
-    "feeds/luci/applications/luci-app-msd_lite"
-
 
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
