@@ -79,18 +79,18 @@ fetch_repo_dir() {
 # ================= 使用示例 =================
 
 # 固定 openssh (packages 仓库)
-fetch_repo_dir \
-    "https://github.com/openwrt/packages.git" \
-    "74abe2d0643d480c6260c1bc3a58e17f0c632f8b" \
-    "net/openssh" \
-    "feeds/packages/net/openssh"
+#fetch_repo_dir \
+#    "https://github.com/openwrt/packages.git" \
+#    "74abe2d0643d480c6260c1bc3a58e17f0c632f8b" \
+#    "net/openssh" \
+#    "feeds/packages/net/openssh"
     
 # 固定 openssl (lede 仓库）    
-fetch_repo_dir \
-    "https://github.com/coolsnowwolf/lede.git" \
-    "4afbc322bfb064e30871e6d34793ab347402f8e0" \
-    "package/libs/openssl" \
-    "package/libs/openssl"
+#fetch_repo_dir \
+#    "https://github.com/coolsnowwolf/lede.git" \
+#    "4afbc322bfb064e30871e6d34793ab347402f8e0" \
+#    "package/libs/openssl" \
+#    "package/libs/openssl"
 
 # 固定 small/xray-core    
 fetch_repo_dir \
@@ -98,6 +98,20 @@ fetch_repo_dir \
     "804846e4cc76221f38f3a57845fab948a7ee5185" \
     "xray-core" \
     "feeds/small/xray-core"
+
+# 固定 msd_lite
+fetch_repo_dir \
+    "https://github.com/kenzok8/small-package.git" \
+    "master" \
+    "msd_lite" \
+    "feeds/small-package/msd_lite"
+
+# 固定 luci-app-msd_lite
+fetch_repo_dir \
+    "https://github.com/kenzok8/small-package.git" \
+    "master" \
+    "luci-app-msd_lite" \
+    "feeds/small-package/luci-app-msd_lite"
 
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
