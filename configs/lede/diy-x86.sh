@@ -97,19 +97,19 @@ fetch_repo_dir \
     "xray-core" \
     "feeds/small/xray-core"
 
-# 固定 msd_lite
+# 拉取 msd_lite 到 feeds/packages/net/
 fetch_repo_dir \
-    "https://github.com/kenzok8/small-package.git" \
+    "https://github.com/gtolog/openwrt-msd_lite.git" \
     "main" \
     "msd_lite" \
-    "feeds/small-package/msd_lite"
+    "feeds/packages/net/msd_lite"
 
-# 固定 luci-app-msd_lite
+# 拉取 luci-app-msd_lite 到 feeds/luci/applications/
 fetch_repo_dir \
-    "https://github.com/kenzok8/small-package.git" \
+    "https://github.com/gtolog/openwrt-msd_lite.git" \
     "main" \
     "luci-app-msd_lite" \
-    "feeds/small-package/luci-app-msd_lite"
+    "feeds/luci/applications/luci-app-msd_lite"
 
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
