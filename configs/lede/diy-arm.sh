@@ -102,14 +102,14 @@ fetch_repo_dir \
 # 固定 msd_lite
 fetch_repo_dir \
     "https://github.com/kenzok8/small-package.git" \
-    "master" \
+    "main" \
     "msd_lite" \
     "feeds/small-package/msd_lite"
 
 # 固定 luci-app-msd_lite
 fetch_repo_dir \
     "https://github.com/kenzok8/small-package.git" \
-    "master" \
+    "main" \
     "luci-app-msd_lite" \
     "feeds/small-package/luci-app-msd_lite"
 
