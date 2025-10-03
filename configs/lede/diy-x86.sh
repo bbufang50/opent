@@ -39,8 +39,8 @@ git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
 #sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd2ae7895813970b2c|' feeds/small/xray-core/Makefile
 git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
 sed -i 's|^KERNEL_PATCHVER:=.*|KERNEL_PATCHVER:=6.1|' target/linux/x86/Makefile
-#rm -rf feeds/packages/net/msd_lite feeds/luci/applications/luci-app-msd_lite
-#git clone https://github.com/gtolog/openwrt-msd_lite.git package/openwrt-msd_lite
+rm -rf feeds/packages/net/msd_lite feeds/luci/applications/luci-app-msd_lite
+git clone https://github.com/zfdx123/msd_lite.git package/msd_lite
 
 # diy.sh - 固定多个仓库的指定目录到特定 commit
 
