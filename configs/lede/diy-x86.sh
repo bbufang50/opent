@@ -94,7 +94,12 @@ fetch_repo_dir \
     "804846e4cc76221f38f3a57845fab948a7ee5185" \
     "xray-core" \
     "feeds/small/xray-core"
-
+# 固定 small/luci-app-ssr-plus    
+fetch_repo_dir \
+    "https://github.com/kenzok8/small.git" \
+    "6f682f14447165846897974c3aa8c4d91df8e969" \
+    "luci-app-ssr-plus" \
+    "feeds/small/luci-app-ssr-plus"
 
 # Delete mosdns
 #rm -rf feeds/packages/net/mosdns
