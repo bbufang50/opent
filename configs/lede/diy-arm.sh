@@ -10,11 +10,30 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
+# =========================================================
+# 1️⃣ 自动修正 GitHub Actions 环境源码路径
+# =========================================================
+if [ -n "$BUILD_ROOT" ] && [ -d "$BUILD_ROOT/openwrt" ]; then
+    cd "$BUILD_ROOT/openwrt"
+elif [ -d /mnt/workdir/openwrt ]; then
+    cd /mnt/workdir/openwrt
+elif [ -d /workdir/openwrt ]; then
+    cd /workdir/openwrt
+elif [ -d "$GITHUB_WORKSPACE/openwrt" ]; then
+    cd "$GITHUB_WORKSPACE/openwrt"
+fi
+echo "📂 当前源码目录: $(pwd)"
+[ -f package/base-files/files/bin/config_generate ] || echo "⚠️ 未找到 config_generate，检查路径是否正确"
+
+# =========================================================
+# 2️⃣ 修改默认 IP 和主机名（保留原逻辑）
+# =========================================================
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.1.2/g' package/base-files/files/bin/config_generate
 
 # Hostname
 sed -i 's/LEDE/fang/g' package/base-files/files/bin/config_generate
+
 
 sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S")/g' package/lean/autocore/files/arm/index.htm
 
@@ -36,8 +55,12 @@ sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/theme
 rm -rf feeds/luci/applications/luci-app-mosdns
 rm -rf feeds/packages/net/{alist,adguardhome,mosdns,xray*,v2ray*,v2ray*,sing*,smartdns}
 rm -rf feeds/packages/utils/v2dat
+rm -rf feeds/small/luci-app-bypass
+rm -rf feeds/small/luci-app-ssr-plus
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
+rm -rf feeds/kenzok8/openwrt-packages/luci-app-lucky
+git clone https://github.com/sirpdboy/luci-app-lucky.git package/lucky
 git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
 #sed -i 's|^PKG_VERSION.*|PKG_VERSION:=25.8.3|' feeds/small/xray-core/Makefile
 #sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd2ae7895813970b2c|' feeds/small/xray-core/Makefile
