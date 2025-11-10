@@ -10,6 +10,24 @@
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
+# =========================================================
+# 1️⃣ 自动修正 GitHub Actions 环境源码路径
+# =========================================================
+if [ -n "$BUILD_ROOT" ] && [ -d "$BUILD_ROOT/openwrt" ]; then
+    cd "$BUILD_ROOT/openwrt"
+elif [ -d /mnt/workdir/openwrt ]; then
+    cd /mnt/workdir/openwrt
+elif [ -d /workdir/openwrt ]; then
+    cd /workdir/openwrt
+elif [ -d "$GITHUB_WORKSPACE/openwrt" ]; then
+    cd "$GITHUB_WORKSPACE/openwrt"
+fi
+echo "📂 当前源码目录: $(pwd)"
+[ -f package/base-files/files/bin/config_generate ] || echo "⚠️ 未找到 config_generate，检查路径是否正确"
+
+# =========================================================
+# 2️⃣ 修改默认 IP 和主机名（保留原逻辑）
+# =========================================================
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.1.2/g' package/base-files/files/bin/config_generate
 
