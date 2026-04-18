@@ -49,8 +49,8 @@ sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' feeds/luci/applic
 sed -i 's/services/system/g' feeds/luci/applications/luci-app-cpufreq/luasrc/controller/cpufreq.lua
 
 # Change default theme
-sed -i 's#luci-theme-bootstrap#luci-theme-opentomcat#g' feeds/luci/collections/luci/Makefile
-sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
+#sed -i 's#luci-theme-bootstrap#luci-theme-opentomcat#g' feeds/luci/collections/luci/Makefile
+#sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
 
 # Add additional packages
 rm -rf feeds/luci/applications/luci-app-mosdns
@@ -60,7 +60,7 @@ rm -rf feeds/small/luci-app-bypass
 rm -rf feeds/small/luci-app-ssr-plus
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
-git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
+#git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
 #sed -i 's|^PKG_VERSION.*|PKG_VERSION:=25.8.3|' feeds/small/xray-core/Makefile
 #sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd2ae7895813970b2c|' feeds/small/xray-core/Makefile
 
@@ -113,11 +113,11 @@ fetch_repo_dir() {
 #    "package/libs/openssl"
 
 # 固定 kenzo/luci-app-argone-config    
-fetch_repo_dir \
-    "https://github.com/kenzok8/openwrt-packages.git" \
-    "975682568be6782d568901094ae20d25602e4d62" \
-    "luci-app-argone-config" \
-    "feeds/kenzo/luci-app-argone-config"
+#fetch_repo_dir \
+#    "https://github.com/kenzok8/openwrt-packages.git" \
+#    "975682568be6782d568901094ae20d25602e4d62" \
+#    "luci-app-argone-config" \
+#    "feeds/kenzo/luci-app-argone-config"
 
 # 固定 small/luci-app-openclash    
 #fetch_repo_dir \
