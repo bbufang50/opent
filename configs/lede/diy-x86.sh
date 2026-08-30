@@ -144,9 +144,15 @@ mkdir -p feeds/packages/utils/dockerd/patches
 cat > feeds/packages/utils/dockerd/patches/100-fix-binary-daemon.patch <<'EOF'
 --- a/hack/make/binary-daemon
 +++ b/hack/make/binary-daemon
-@@ -1,1 +1,3 @@
--	cp -f "$(command -v "$file")" "$dir/"
-+	if command -v "$file" >/dev/null 2>&1; then
-+		cp -f "$(command -v "$file")" "$dir/"
-+	fi
+@@ -13,6 +13,8 @@
+ 		return
+ 	fi
+ 	echo "Copying nested executables into $dir"
+ 	for file in containerd containerd-shim-runc-v2 ctr runc docker-init rootlesskit dockerd-rootless.sh dockerd-rootless-setuptool.sh; do
+-		cp -f "$(command -v "$file")" "$dir/"
++		if command -v "$file" >/dev/null 2>&1; then
++			cp -f "$(command -v "$file")" "$dir/"
++		fi
+ 	done
+ }
 EOF
