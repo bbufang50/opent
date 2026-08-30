@@ -138,3 +138,15 @@ sed -i '750a\
                 <tr><td width="33%">&#28304;&#30721;&#58;&#32;&#108;&#101;&#100;&#101;</td><td><a href="https://github.com/coolsnowwolf/lede" style="color: black;" target="_blank">&#28304;&#30721;&#38142;&#25509;</a></td></tr>
 ' package/lean/autocore/files/x86/index.htm
 
+# 修复 dockerd binary-daemon 缺少附属程序导致 cp: cannot stat ''
+mkdir -p feeds/packages/utils/dockerd/patches
+
+cat > feeds/packages/utils/dockerd/patches/100-fix-binary-daemon.patch <<'EOF'
+--- a/hack/make/binary-daemon
++++ b/hack/make/binary-daemon
+@@ -1,1 +1,3 @@
+-	cp -f "$(command -v "$file")" "$dir/"
++	if command -v "$file" >/dev/null 2>&1; then
++		cp -f "$(command -v "$file")" "$dir/"
++	fi
+EOF
