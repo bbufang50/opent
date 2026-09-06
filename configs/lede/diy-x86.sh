@@ -162,18 +162,11 @@ mkdir -p package/network/services/fullconenat-nft/patches
 cat > package/network/services/fullconenat-nft/patches/001-fix-build.patch <<'EOF'
 --- a/src/nft_ext_fullcone.c
 +++ b/src/nft_ext_fullcone.c
-@@ -121,7 +121,14 @@ static int exp_event_cb(unsigned int eve
+@@ -112,5 +112,5 @@
  }
  #endif
  
-+#if ((LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 184)) && \
-+     (LINUX_VERSION_CODE < KERNEL_VERSION(6, 2, 0))) || \
-+    ((LINUX_VERSION_CODE >= KERNEL_VERSION(6, 6, 113)) && \
-+     (LINUX_VERSION_CODE < KERNEL_VERSION(6, 7, 0))) || \
-+    (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 12, 0))
+-static int nft_fullcone_validate(const struct nft_ctx *ctx, const struct nft_expr *expr, const struct nft_data **data)
 +static int nft_fullcone_validate(const struct nft_ctx *ctx, const struct nft_expr *expr)
-+#else
- static int nft_fullcone_validate(const struct nft_ctx *ctx, const struct nft_expr *expr, const struct nft_data **data)
-+#endif
  {
 EOF
