@@ -157,16 +157,5 @@ cat > feeds/packages/utils/dockerd/patches/100-fix-binary-daemon.patch <<'EOF'
 EOF
 
 # 修复 fullconenat-nft 与 Linux 6.1.184+ nftables API 不兼容
-mkdir -p package/network/services/fullconenat-nft/patches
-
-cat > package/network/services/fullconenat-nft/patches/002-fix-linux61.patch <<'EOF'
---- a/src/nft_ext_fullcone.c
-+++ b/src/nft_ext_fullcone.c
-@@ -113,7 +113,7 @@
- #endif
- 
--static int nft_fullcone_validate(const struct nft_ctx *ctx, const struct nft_expr *expr, const struct nft_data **data)
-+static int nft_fullcone_validate(const struct nft_ctx *ctx, const struct nft_expr *expr)
- {
- 	int err;
-EOF
+sed -i 's/LINUX_VERSION_CODE >= KERNEL_VERSION(6, 6, 113))/LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 184)) || ((LINUX_VERSION_CODE >= KERNEL_VERSION(6, 6, 113))/' \
+    package/network/services/fullconenat-nft/patches/001-fix-build.patch
