@@ -156,3 +156,4 @@ cat > feeds/packages/utils/dockerd/patches/100-fix-binary-daemon.patch <<'EOF'
  	done
  }
 EOF
+
