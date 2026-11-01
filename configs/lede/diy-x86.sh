@@ -61,7 +61,7 @@ rm -rf feeds/small/luci-app-ssr-plus
 #sed -i 's|^PKG_VERSION.*|PKG_VERSION:=25.8.3|' feeds/small/xray-core/Makefile
 #sed -i 's|^PKG_HASH.*|PKG_HASH:=a7d3785fdd46f1b045b1ef49a2a06e595c327f514b5ee8cd2ae7895813970b2c|' feeds/small/xray-core/Makefile
 #git clone --depth=1 https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/luci-theme-opentomcat
-sed -i 's|^KERNEL_PATCHVER:=.*|KERNEL_PATCHVER:=6.1|' target/linux/x86/Makefile
+#sed -i 's|^KERNEL_PATCHVER:=.*|KERNEL_PATCHVER:=6.1|' target/linux/x86/Makefile
 
 # diy.sh - 固定多个仓库的指定目录到特定 commit
 
@@ -155,19 +155,4 @@ cat > feeds/packages/utils/dockerd/patches/100-fix-binary-daemon.patch <<'EOF'
 +		fi
  	done
  }
-EOF
-
-# 修复 fullconenat-nft 与 Linux 6.1.184+ nftables API 不兼容
-mkdir -p package/network/services/fullconenat-nft/patches
-
-cat > package/network/services/fullconenat-nft/patches/001-fix-build.patch <<'EOF'
---- a/src/nft_ext_fullcone.c
-+++ b/src/nft_ext_fullcone.c
-@@ -112,5 +112,5 @@
- }
- #endif
- 
--static int nft_fullcone_validate(const struct nft_ctx *ctx, const struct nft_expr *expr, const struct nft_data **data)
-+static int nft_fullcone_validate(const struct nft_ctx *ctx, const struct nft_expr *expr)
- {
 EOF
