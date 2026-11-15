@@ -128,6 +128,30 @@ jobs:
         git clone --depth=1 --single-branch -b $REPO_BRANCH $REPO_URL openwrt
         ln -sf "$(pwd)/openwrt" $GITHUB_WORKSPACE/openwrt
         df -hT
+        
+    # 恢复到 2026-11-13 更新之前的完整状态
+    - name: Restore LEDE to pre-bed8835
+      working-directory: openwrt
+      run: |
+        set -euo pipefail
+
+        echo "=== 获取历史提交 ==="
+        git fetch --no-tags --deepen=200 origin master
+
+        echo "=== 确认更新前的提交 ==="
+        git cat-file -e '80122fe^{commit}'
+
+        echo "=== 整个 LEDE 仓库恢复到更新前 ==="
+        git reset --hard 80122fe
+
+        echo "=== 确认当前版本 ==="
+        git log -1 --oneline
+
+        echo "=== 检查工作区 ==="
+        git status --short
+
+        echo "LEDE 已恢复到 bed8835 更新之前"
+
 
     # 加载自定义 feed 配置
     - name: Load custom feeds
@@ -163,31 +187,6 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH || true
         df -hT
-
-
-
-    # 恢复到 2026-11-13 更新之前的完整状态
-    - name: Restore LEDE to pre-bed8835
-      working-directory: openwrt
-      run: |
-        set -euo pipefail
-
-        echo "=== 获取历史提交 ==="
-        git fetch --no-tags --deepen=200 origin master
-
-        echo "=== 确认更新前的提交 ==="
-        git cat-file -e '80122fe^{commit}'
-
-        echo "=== 整个 LEDE 仓库恢复到更新前 ==="
-        git reset --hard 80122fe
-
-        echo "=== 确认当前版本 ==="
-        git log -1 --oneline
-
-        echo "=== 检查工作区 ==="
-        git status --short
-
-        echo "LEDE 已恢复到 bed8835 更新之前"
 
 
     # 下载源码包
@@ -425,6 +424,29 @@ jobs:
         ln -sf "$(pwd)/openwrt" $GITHUB_WORKSPACE/openwrt
         df -hT
 
+    # 恢复到 2026-11-13 更新之前的完整状态
+    - name: Restore LEDE to pre-bed8835
+      working-directory: openwrt
+      run: |
+        set -euo pipefail
+
+        echo "=== 获取历史提交 ==="
+        git fetch --no-tags --deepen=200 origin master
+
+        echo "=== 确认更新前的提交 ==="
+        git cat-file -e '80122fe^{commit}'
+
+        echo "=== 整个 LEDE 仓库恢复到更新前 ==="
+        git reset --hard 80122fe
+
+        echo "=== 确认当前版本 ==="
+        git log -1 --oneline
+
+        echo "=== 检查工作区 ==="
+        git status --short
+
+        echo "LEDE 已恢复到 bed8835 更新之前"
+
     # 加载自定义 feed 配置
     - name: Load custom feeds
       run: |
@@ -459,31 +481,6 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH || true
         df -hT
-
-
-
-    # 恢复到 2026-11-13 更新之前的完整状态
-    - name: Restore LEDE to pre-bed8835
-      working-directory: openwrt
-      run: |
-        set -euo pipefail
-
-        echo "=== 获取历史提交 ==="
-        git fetch --no-tags --deepen=200 origin master
-
-        echo "=== 确认更新前的提交 ==="
-        git cat-file -e '80122fe^{commit}'
-
-        echo "=== 整个 LEDE 仓库恢复到更新前 ==="
-        git reset --hard 80122fe
-
-        echo "=== 确认当前版本 ==="
-        git log -1 --oneline
-
-        echo "=== 检查工作区 ==="
-        git status --short
-
-        echo "LEDE 已恢复到 bed8835 更新之前"
 
 
     # 下载源码包
