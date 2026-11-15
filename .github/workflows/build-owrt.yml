@@ -186,7 +186,8 @@ jobs:
         git status --short -- tools/gnulib tools/elfutils
         git diff --stat -- tools/gnulib tools/elfutils
         echo "GNULIB 和 ELFUTILS 已恢复到 80122fe"
-        
+        echo "=== 查看 GNULIB 190 补丁 ==="
+        cat tools/gnulib/patches/190-stdc-m4-no-cache.patch
     # 下载源码包
     - name: Download package
       id: package
@@ -479,7 +480,8 @@ jobs:
         git status --short -- tools/gnulib tools/elfutils
         git diff --stat -- tools/gnulib tools/elfutils
         echo "GNULIB 和 ELFUTILS 已恢复到 80122fe"
-        
+        echo "=== 查看 GNULIB 190 补丁 ==="
+        cat tools/gnulib/patches/190-stdc-m4-no-cache.patch
     # 下载源码包
     - name: Download package
       id: package
