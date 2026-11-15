@@ -165,35 +165,30 @@ jobs:
         df -hT
 
 
-    # 临时回退 GNULIB 和 ELFUTILS
-    - name: Restore GNULIB and ELFUTILS
+
+    # 恢复到 2026-11-13 更新之前的完整状态
+    - name: Restore LEDE to pre-bed8835
       working-directory: openwrt
       run: |
         set -euo pipefail
 
         echo "=== 获取历史提交 ==="
         git fetch --no-tags --deepen=200 origin master
-        git fetch --no-tags origin 8704039
 
-        git cat-file -e '8704039^{commit}'
+        echo "=== 确认更新前的提交 ==="
         git cat-file -e '80122fe^{commit}'
 
-        echo "=== GNULIB 回退到官方 stable-202401 ==="
-        git checkout 8704039 -- tools/gnulib
+        echo "=== 整个 LEDE 仓库恢复到更新前 ==="
+        git reset --hard 80122fe
 
-        echo "=== ELFUTILS 回退到 80122fe ==="
-        git checkout 80122fe -- tools/elfutils
+        echo "=== 确认当前版本 ==="
+        git log -1 --oneline
 
-        echo "=== 检查 GNULIB 版本 ==="
-        grep -E 'PKG_VERSION|PKG_SOURCE_DATE|PKG_SOURCE_VERSION' tools/gnulib/Makefile
+        echo "=== 检查工作区 ==="
+        git status --short
 
-        echo "=== 检查 GNULIB 补丁 ==="
-        ls tools/gnulib/patches/
+        echo "LEDE 已恢复到 bed8835 更新之前"
 
-        echo "=== 回退结果 ==="
-        git status --short -- tools/gnulib tools/elfutils
-
-        echo "GNULIB 和 ELFUTILS 回退完成"
 
     # 下载源码包
     - name: Download package
@@ -466,35 +461,30 @@ jobs:
         df -hT
 
 
-    # 临时回退 GNULIB 和 ELFUTILS
-    - name: Restore GNULIB and ELFUTILS
+
+    # 恢复到 2026-11-13 更新之前的完整状态
+    - name: Restore LEDE to pre-bed8835
       working-directory: openwrt
       run: |
         set -euo pipefail
 
         echo "=== 获取历史提交 ==="
         git fetch --no-tags --deepen=200 origin master
-        git fetch --no-tags origin 8704039
 
-        git cat-file -e '8704039^{commit}'
+        echo "=== 确认更新前的提交 ==="
         git cat-file -e '80122fe^{commit}'
 
-        echo "=== GNULIB 回退到官方 stable-202401 ==="
-        git checkout 8704039 -- tools/gnulib
+        echo "=== 整个 LEDE 仓库恢复到更新前 ==="
+        git reset --hard 80122fe
 
-        echo "=== ELFUTILS 回退到 80122fe ==="
-        git checkout 80122fe -- tools/elfutils
+        echo "=== 确认当前版本 ==="
+        git log -1 --oneline
 
-        echo "=== 检查 GNULIB 版本 ==="
-        grep -E 'PKG_VERSION|PKG_SOURCE_DATE|PKG_SOURCE_VERSION' tools/gnulib/Makefile
+        echo "=== 检查工作区 ==="
+        git status --short
 
-        echo "=== 检查 GNULIB 补丁 ==="
-        ls tools/gnulib/patches/
+        echo "LEDE 已恢复到 bed8835 更新之前"
 
-        echo "=== 回退结果 ==="
-        git status --short -- tools/gnulib tools/elfutils
-
-        echo "GNULIB 和 ELFUTILS 回退完成"
 
     # 下载源码包
     - name: Download package
