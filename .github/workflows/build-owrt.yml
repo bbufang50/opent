@@ -164,34 +164,37 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P2_SH || true
         df -hT
 
-    # 临时回退 2026-11-13 更新的 host tools（只恢复这两个目录）
-    - name: Restore GNULIB and ELFUTILS to pre-bed8835
+
+    # 临时回退 GNULIB 和 ELFUTILS
+    - name: Restore GNULIB and ELFUTILS
       working-directory: openwrt
       run: |
         set -euo pipefail
 
-        echo "=== 获取 80122fe 历史提交 ==="
+        echo "=== 获取历史提交 ==="
         git fetch --no-tags --deepen=200 origin master
+        git fetch --no-tags origin 8704039
 
-        # 确认目标提交已进入本地历史
+        git cat-file -e '8704039^{commit}'
         git cat-file -e '80122fe^{commit}'
 
-        echo "=== 仅回退 tools/gnulib 和 tools/elfutils ==="
-        git checkout 80122fe -- tools/gnulib tools/elfutils
+        echo "=== GNULIB 回退到官方 stable-202401 ==="
+        git checkout 8704039 -- tools/gnulib
 
-        # 删除新版本遗留的 Python 兼容补丁
-        rm -f tools/gnulib/patches/020-python-version.patch
+        echo "=== ELFUTILS 回退到 80122fe ==="
+        git checkout 80122fe -- tools/elfutils
+
+        echo "=== 检查 GNULIB 版本 ==="
+        grep -E 'PKG_VERSION|PKG_SOURCE_DATE|PKG_SOURCE_VERSION' tools/gnulib/Makefile
+
+        echo "=== 检查 GNULIB 补丁 ==="
+        ls tools/gnulib/patches/
 
         echo "=== 回退结果 ==="
         git status --short -- tools/gnulib tools/elfutils
-        git diff --stat -- tools/gnulib tools/elfutils
-        echo "GNULIB 和 ELFUTILS 已恢复到 80122fe"
-        
-        echo "=== 删除 190 补丁中不存在的 std-gnu23 部分 ==="
-        sed -i '/^--- a\/m4\/std-gnu23\.m4/,$d' tools/gnulib/patches/190-stdc-m4-no-cache.patch  
 
-        echo "=== 检查修改后的 190 补丁 ==="
-        cat tools/gnulib/patches/190-stdc-m4-no-cache.patch
+        echo "GNULIB 和 ELFUTILS 回退完成"
+
     # 下载源码包
     - name: Download package
       id: package
@@ -462,35 +465,37 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P2_SH || true
         df -hT
 
-    # 临时回退 2026-11-13 更新的 host tools（只恢复这两个目录）
-    - name: Restore GNULIB and ELFUTILS to pre-bed8835
+
+    # 临时回退 GNULIB 和 ELFUTILS
+    - name: Restore GNULIB and ELFUTILS
       working-directory: openwrt
       run: |
         set -euo pipefail
 
-        echo "=== 获取 80122fe 历史提交 ==="
+        echo "=== 获取历史提交 ==="
         git fetch --no-tags --deepen=200 origin master
+        git fetch --no-tags origin 8704039
 
-        # 确认目标提交已进入本地历史
+        git cat-file -e '8704039^{commit}'
         git cat-file -e '80122fe^{commit}'
 
-        echo "=== 仅回退 tools/gnulib 和 tools/elfutils ==="
-        git checkout 80122fe -- tools/gnulib tools/elfutils
+        echo "=== GNULIB 回退到官方 stable-202401 ==="
+        git checkout 8704039 -- tools/gnulib
 
-        # 删除新版本遗留的 Python 兼容补丁
-        rm -f tools/gnulib/patches/020-python-version.patch
+        echo "=== ELFUTILS 回退到 80122fe ==="
+        git checkout 80122fe -- tools/elfutils
+
+        echo "=== 检查 GNULIB 版本 ==="
+        grep -E 'PKG_VERSION|PKG_SOURCE_DATE|PKG_SOURCE_VERSION' tools/gnulib/Makefile
+
+        echo "=== 检查 GNULIB 补丁 ==="
+        ls tools/gnulib/patches/
 
         echo "=== 回退结果 ==="
         git status --short -- tools/gnulib tools/elfutils
-        git diff --stat -- tools/gnulib tools/elfutils
-        echo "GNULIB 和 ELFUTILS 已恢复到 80122fe"
-        echo "GNULIB 和 ELFUTILS 已恢复到 80122fe"
-        
-        echo "=== 删除 190 补丁中不存在的 std-gnu23 部分 ==="
-        sed -i '/^--- a\/m4\/std-gnu23\.m4/,$d' tools/gnulib/patches/190-stdc-m4-no-cache.patch  
 
-        echo "=== 检查修改后的 190 补丁 ==="
-        cat tools/gnulib/patches/190-stdc-m4-no-cache.patch
+        echo "GNULIB 和 ELFUTILS 回退完成"
+
     # 下载源码包
     - name: Download package
       id: package
