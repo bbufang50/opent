@@ -183,7 +183,8 @@ jobs:
         git status --short -- tools/gnulib tools/elfutils
         git diff --stat -- tools/gnulib tools/elfutils
         echo "GNULIB 和 ELFUTILS 已恢复到 80122fe"
-
+    # 删除 bed8835 新增的、与旧版 GNULIB 不兼容的补丁
+     rm -f tools/gnulib/patches/020-python-version.patch
     # 下载源码包
     - name: Download package
       id: package
