@@ -164,6 +164,26 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P2_SH || true
         df -hT
 
+    # 临时回退 2026-11-13 更新的 host tools（只恢复这两个目录）
+    - name: Restore GNULIB and ELFUTILS to pre-bed8835
+      working-directory: openwrt
+      run: |
+        set -euo pipefail
+
+        echo "=== 获取 80122fe 历史提交 ==="
+        git fetch --no-tags --deepen=200 origin master
+
+        # 确认目标提交已进入本地历史
+        git cat-file -e '80122fe^{commit}'
+
+        echo "=== 仅回退 tools/gnulib 和 tools/elfutils ==="
+        git checkout 80122fe -- tools/gnulib tools/elfutils
+
+        echo "=== 回退结果 ==="
+        git status --short -- tools/gnulib tools/elfutils
+        git diff --stat -- tools/gnulib tools/elfutils
+        echo "GNULIB 和 ELFUTILS 已恢复到 80122fe"
+
     # 下载源码包
     - name: Download package
       id: package
@@ -433,6 +453,26 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH || true
         df -hT
+
+    # 临时回退 2026-11-13 更新的 host tools（只恢复这两个目录）
+    - name: Restore GNULIB and ELFUTILS to pre-bed8835
+      working-directory: openwrt
+      run: |
+        set -euo pipefail
+
+        echo "=== 获取 80122fe 历史提交 ==="
+        git fetch --no-tags --deepen=200 origin master
+
+        # 确认目标提交已进入本地历史
+        git cat-file -e '80122fe^{commit}'
+
+        echo "=== 仅回退 tools/gnulib 和 tools/elfutils ==="
+        git checkout 80122fe -- tools/gnulib tools/elfutils
+
+        echo "=== 回退结果 ==="
+        git status --short -- tools/gnulib tools/elfutils
+        git diff --stat -- tools/gnulib tools/elfutils
+        echo "GNULIB 和 ELFUTILS 已恢复到 80122fe"
 
     # 下载源码包
     - name: Download package
