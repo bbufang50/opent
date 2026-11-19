@@ -135,8 +135,8 @@ jobs:
       working-directory: openwrt
       run: |
         set -e
-        git fetch --no-tags --deepen=200 origin master
-        git reset --hard 80122fe
+        git fetch --no-tags --unshallow origin
+        git reset --hard d20e365
         git log -1 --oneline
         
     # 加载自定义 feed 配置
@@ -416,8 +416,8 @@ jobs:
       working-directory: openwrt
       run: |
         set -e
-        git fetch --no-tags --deepen=200 origin master
-        git reset --hard 80122fe
+        git fetch --no-tags --unshallow origin
+        git reset --hard d20e365
         git log -1 --oneline
 
     # 加载自定义 feed 配置
